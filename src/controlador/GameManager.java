@@ -1,14 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package controlador;
 
-public class GameManager {
+import observador.SujetoObservable;
+
+public class GameManager extends SujetoObservable {
     private static GameManager instance;
     private boolean gameOver = false;
     private int vidas = 1;
     private int score = 0;
+    private int puntosPorEvasion = 10; // Puntos por esquivar un enemigo
 
     private GameManager() {}
 
@@ -18,11 +17,35 @@ public class GameManager {
     }
 
     public boolean isGameOver() { return gameOver; }
-    public void setGameOver(boolean v) { gameOver = v; }
+    public void setGameOver(boolean v) { 
+        gameOver = v; 
+        notificar("gameOver", v);
+    }
 
     public int getVidas() { return vidas; }
-    public void setVidas(int v) { vidas = v; }
+    public void setVidas(int v) { 
+        vidas = v; 
+        notificar("vidas", v);
+    }
 
     public int getScore() { return score; }
-    public void addScore(int s) { score += s; }
+    
+    public void addScore(int s) { 
+        score += s; 
+        notificar("puntos", score); // ¡Notifica el cambio!
+    }
+    
+    public void resetScore() {
+        score = 0;
+        notificar("puntos", score);
+    }
+    
+    public void sumarPuntosPorEvasion() {
+        addScore(puntosPorEvasion);
+    }
+    
+    // Método para cuando el jugador esquiva un enemigo
+    public void enemigoEsquivado() {
+        sumarPuntosPorEvasion();
+    }
 }

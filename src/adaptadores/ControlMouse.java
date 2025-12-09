@@ -1,30 +1,21 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package adaptadores;
 
 import java.awt.event.MouseEvent;
 
-public class ControlMouse implements ControladorMovimiento {
-
-    private final adaptadores.MovimientoJugador movimiento;
-
-    public ControlMouse(MovimientoJugador movimiento) {
-        this.movimiento = movimiento;
+public class ControlMouse {
+    private MovimientoJugador jugador;
+    
+    public ControlMouse(MovimientoJugador jugador) {
+        this.jugador = jugador;
     }
-
+    
     public void procesarMovimiento(MouseEvent e) {
-        movimiento.establecerPosicion(e.getX(), e.getY());
+        // Solo mueve verticalmente (como en el juego original)
+        // Ajustamos la posición del mouse para que funcione correctamente
+        int mouseY = e.getY();
+        
+        // Ajuste para que el vehículo siga mejor el cursor
+        // Restamos una compensación para que sea más preciso
+        jugador.moverAMouse(mouseY - 60);
     }
-
-    @Override
-    public void moverIzquierda() {}
-    @Override
-    public void moverDerecha() {}
-    @Override
-    public void moverArriba() {}
-    @Override
-    public void moverAbajo() {}
 }
-

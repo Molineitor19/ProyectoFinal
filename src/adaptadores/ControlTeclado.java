@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package adaptadores;
 
 import java.awt.event.KeyEvent;
@@ -16,7 +12,6 @@ public class ControlTeclado implements ControladorMovimiento {
         this.paso = paso;
     }
 
-
     public void procesarTecla(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_LEFT -> moverIzquierda();
@@ -28,22 +23,26 @@ public class ControlTeclado implements ControladorMovimiento {
 
     @Override
     public void moverIzquierda() {
-        movimiento.mover(-5, 0);
+        movimiento.moverIzquierda(paso);
     }
 
     @Override
     public void moverDerecha() {
-        movimiento.mover(5, 0);
+        movimiento.moverDerecha(paso);
     }
 
     @Override
     public void moverArriba() {
-        movimiento.mover(0, -20);
+        movimiento.moverArriba(paso);
     }
 
     @Override
     public void moverAbajo() {
-        movimiento.mover(0, 20);
+        movimiento.moverAbajo(paso);
+    }
+    
+    // Método para actualizar el paso si cambia
+    public void setPaso(int nuevoPaso) {
+        this.paso = nuevoPaso;
     }
 }
-
