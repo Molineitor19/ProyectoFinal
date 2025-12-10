@@ -167,11 +167,15 @@ Image imagen = ImageFacade.cargar("/ruta/imagen.png");
 
 ### Flujo del juego
 
-Menú Principal → Selector de Vehículo → Juego en Progreso
-        ↑               ↓                    ↓
-        └─────── Game Over ←───── ¿Colisión? ←─┘
-                        ↓
-             Reiniciar / Menú / Salir
-
+graph TD
+    A[Menú Principal] --> B[Selector de Vehículo]
+    B --> C[Juego en Progreso]
+    C --> D{¿Colisión?}
+    D -->|No| C
+    D -->|Sí| E[Game Over]
+    E --> F{¿Qué hacer?}
+    F -->|Reiniciar| C
+    F -->|Volver al Menú| A
+    F -->|Salir| G[Fin]
 
 
