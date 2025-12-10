@@ -1,241 +1,188 @@
-# No Choques - Videojuego de Esquivar Obstáculos
+#  README - Proyecto "No Choques"
 
-![Java](https://img.shields.io/badge/Java-ED8B00?style=flat&logo=openjdk&logoColor=white)
-![Swing](https://img.shields.io/badge/Java%20Swing-FF9800?style=flat&logo=java&logoColor=white)
-![Design Patterns](https://img.shields.io/badge/Design%20Patterns-GoF-blueviolet?style=flat)
-![License](https://img.shields.io/badge/License-MIT-green)
+##  Descripción del Proyecto
 
-**Un juego de destreza y reflejos desarrollado en Java con arquitectura profesional.**
+**No Choques** es un videojuego desarrollado en Java Swing, donde el
+jugador controla un vehículo (carro, moto o bicicleta --- cada uno con
+variantes estándar y PRO) y debe esquivar obstáculos que aparecen desde
+la derecha de la pantalla.
 
----
+El juego incluye:
 
-## Tabla de Contenidos
-- Vista General
-- Características Principales
-- Arquitectura y Patrones
-- Mecánicas de Juego
-- Cómo Ejecutar
-- Estructura del Proyecto
-- Integrantes
-- Contacto y Contribuciones
-- Métricas del Proyecto
-- Futuras Mejoras
+-   Un menú principal estilizado\
+-   Selector de vehículos\
+-   Animaciones del jugador y enemigos\
+-   Sistema de puntuación y vidas\
+-   Cambio de control (mouse/teclado)\
+-   Pantalla Game Over personalizada\
+-   Arquitectura con varios patrones de diseño GoF
 
----
+El objetivo es resistir el mayor tiempo posible esquivando obstáculos y
+acumulando puntos.
 
-## Vista General
+##  Cómo Funciona el Juego
 
-**No Choques** es un videojuego arcade desarrollado en Java Swing donde el jugador controla un vehículo que debe esquivar obstáculos en una carretera infinita.
+### 1. Menú Principal
 
-**Objetivo:** sobrevivir el mayor tiempo posible acumulando puntos.
+Permite: - Iniciar el juego\
+- Seleccionar vehículo\
+- Salir
 
----
+Los botones tienen estilo personalizado
 
-## Características Principales
+------------------------------------------------------------------------
 
-### Interfaz Visual Mejorada
-- Menú principal con efectos visuales y gradientes  
-- Selector de vehículos con tarjetas interactivas  
-- Sistema de puntuación en tiempo real  
-- Diálogos personalizados y animaciones  
-- Modo pantalla completa opcional  
+### 2. Selector de Vehículos
 
-### Sistema de Control Dual
-- **Mouse:** movimiento vertical  
-- **Teclado:** flechas para movimiento completo  
-- **M:** alternar entre teclado y mouse  
+El jugador puede elegir entre 6 vehículos:
 
-### Sistema de Vehículos
+-   Carro\
+-   Carro Pro\
+-   Moto\
+-   Moto Pro\
+-   Bicicleta\
+-   Bicicleta Pro
 
-| Vehículo | Variante | Velocidad | Característica |
-|---------|----------|-----------|----------------|
-| Carro   | Normal   | Media     | Tamaño grande, estable |
-| Carro   | Pro      | Alta      | Mejor aceleración |
-| Moto    | Normal   | Alta      | Ágil, tamaño pequeño |
-| Moto    | Pro      | Máxima    | Velocidad extrema |
-| Bici    | Normal   | Baja      | Maniobrabilidad excelente |
-| Bici    | Pro      | Media     | Balance perfecto |
+Cada vehículo modifica: - **Velocidad de movimiento (paso)**\
+- **Velocidad de animación (delay)**\
+- **Sprites**
 
-### Sistema de Progresión
-- Puntos por obstáculos esquivados  
-- Sistema de vidas (actualmente 1 vida)  
-- Puntuación persistente por sesión  
-- Pantalla de Game Over con opciones  
+------------------------------------------------------------------------
 
----
+### 3. Vista del Juego
 
-## Arquitectura y Patrones
+La clase `Vista` contiene la lógica principal:
 
-### Patrones Implementados
+-   Animación del jugador\
+-   Movimiento por teclado o mouse\
+-   Aparición y movimiento de enemigos\
+-   Detección de colisiones\
+-   Actualización de puntuación y vidas\
+-   Gestión del Game Over
 
-#### **Singleton – GameManager**
-Control centralizado del estado del juego.
+Los enemigos reaparecen cuando salen de pantalla y otorgan puntos si son
+esquivados.
 
-```java
-GameManager.getInstance();
-Administra puntuación, vidas y estado general.
+------------------------------------------------------------------------
 
-Observer – Sistema de Notificaciones
-Comunicación desacoplada entre componentes.
+### 4. Game Over
 
-java
-Copiar código
-gameManager.agregarObservador(vista);
-gameManager.notificar("puntos", 100);
-Actualiza la interfaz en tiempo real.
+Incluye una ventana personalizada con 3 opciones:
 
-Strategy – Comportamiento de Enemigos
-Permite intercambiar algoritmos de movimiento.
+-   Reiniciar\
+-   Volver al menú\
+-   Salir
 
-java
-Copiar código
-interface EnemyMovementStrategy {
-    void mover();
-}
-Estrategias incluidas:
+------------------------------------------------------------------------
 
-Movimiento recto
+## 🧩 Patrones GoF Implementados
 
-ZigZag
+### ✔️ 1. Singleton --- `GameManager`
 
-Decorator – Mejoras de Vehículos
-Extiende comportamiento sin modificar la clase base.
+Administra:
 
-java
-Copiar código
-Desplazamiento vehiculo = new Carro();
-vehiculo = new TurboDecorator(vehiculo);
-Factory Method – Creación de Vehículos
-Centraliza la construcción de objetos vehículo.
+-   Puntuación\
+-   Vidas\
+-   Estado del juego
 
-java
-Copiar código
-VehiculoFactory factory = new CarroFactory();
-Vehiculo carro = factory.crearVehiculo();
-Facade – Manejo de Recursos
-Simplifica carga de imágenes y manejo de archivos.
+Solo existe una instancia global.
 
-java
-Copiar código
-Image imagen = ImageFacade.cargar("/ruta/imagen.png");
-Patrones No Implementados
-Patrón	Razón
-Builder	No hay construcción compleja
-Composite	No existen jerarquías profundas
-State	Estados manejados directamente
-Command	No se requieren acciones encapsuladas
-Memento	No hay sistema de guardado
-Visitor	No se recorren estructuras complejas
+**Razón:** El estado del juego debe ser único y accesible desde
+cualquier parte.
 
-Mecánicas de Juego
-Controles
-Tecla / Acción	Función
-Flechas	Movimiento (modo teclado)
-Mouse	Movimiento vertical (modo mouse)
-M	Cambiar modo de control
-ESC	Salir de pantalla completa
+------------------------------------------------------------------------
 
-Sistema de Puntuación
-sql
-Copiar código
-+---------------+---------------+-------------------+
-|   Acción      |   Puntos      |   Descripción     |
-+---------------+---------------+-------------------+
-|  Esquivar     |   +10         | Por obstáculo     |
-|  Sobrevivir   |  Tiempo x 1   | Cada segundo vivo |
-|  Colisión     |   Game Over   | Fin del juego     |
-+---------------+---------------+-------------------+
-Flujo del Juego
-markdown
-Copiar código
-Menú Principal → Selector de Vehículo → Juego en Progreso
-        ↑               ↓                    ↓
-        └─────── Game Over ←───── ¿Colisión? ←─┘
-                        ↓
-             Reiniciar / Menú / Salir
-Cómo Ejecutar
-Prerrequisitos
-Java JDK 8 o superior
+### ✔️ 2. Observer --- `SujetoObservable`, `Observador`, `Vista`
 
-Cualquier IDE (IntelliJ, Eclipse, NetBeans) o línea de comandos
+El `GameManager` notifica a las vistas cuando:
 
-Pasos de Ejecución
-Clonar o descargar el proyecto
+-   Cambia la puntuación\
+-   Cambian las vidas\
+-   Ocurre el Game Over
 
-Abrir en tu IDE
+**Razón:** Desacoplar la lógica del juego de la interfaz gráfica.
 
-Compilar
+------------------------------------------------------------------------
 
-Ejecutar MenuPrincipal.java
+### ✔️ 3. Strategy --- Movimiento de enemigos
 
-Compilación por Consola
-bash
-Copiar código
-# Compilar
-javac -d bin src/**/*.java
+Clases:
 
-# Ejecutar
-java -cp bin Vista.MenuPrincipal
-Estructura del Proyecto
-bash
-Copiar código
-src/
-├── Vista/
-│   ├── MenuPrincipal.java
-│   ├── Vista.java
-│   ├── SelectorVehiculo.java
-│   └── GameOverDialog.java
-├── adaptadores/
-│   ├── ControlTeclado.java
-│   ├── ControlMouse.java
-│   └── MovimientoJugador.java
-├── controlador/
-│   ├── GameManager.java
-│   └── ImageFacade.java
-├── enemigos/
-│   ├── Enemy.java
-│   ├── EnemyMovementStrategy.java
-│   └── StraightMovement.java
-├── fabrica/
-│   ├── VehiculoFactory.java
-│   └── Factories específicas
-├── modelo/
-│   ├── Desplazamiento.java
-│   ├── DesplazamientoDecorator.java
-│   └── Vehículos
-├── observador/
-│   ├── Observador.java
-│   ├── SujetoObservable.java
-│   └── ObservadorPuntuacion.java
-└── Imagenes/imagenes/
-Integrantes
-Desarrollador	Código	Rol
-Kaleth Molina Díaz	20232020096	Arquitectura y Patrones
-Nelson David Molina Ramos	20222020121	Interfaz y Gameplay
+-   `EnemyMovementStrategy`\
+-   `StraightMovement`\
+-   `ZigZagMovement`
 
-Contacto y Contribuciones
-Proyecto académico con fines demostrativos
-Basado en mejores prácticas de diseño de software
+**Razón:** Permitir diferentes comportamientos de movimiento sin
+modificar la clase Enemy.
 
-Universidad Distrital Francisco José de Caldas
-Ingeniería de Sistemas – Patrones de Diseño 2024
+------------------------------------------------------------------------
 
-Métricas del Proyecto
-6 patrones GoF implementados
+### ✔️ 4. Decorator --- Sistema de vehículos
 
-Más de 15 clases organizadas por responsabilidad
+Clases:
 
-Interfaz completa con efectos visuales
+-   `Desplazamiento`\
+-   `DesplazamientoDecorator`\
+-   `Carro`, `Moto`, `Bicicleta`
 
-Rendimiento optimizado para Swing
+**Razón:** Extender dinámicamente el comportamiento del movimiento sin
+alterar el personaje base.
 
-Futuras Mejoras
-Sistema de power-ups (Observer)
+------------------------------------------------------------------------
 
-Dificultad progresiva (Strategy)
+### ✔️ 5. Abstract Factory / Factory Method --- Fabricación de vehículos
 
-Récords guardados (Memento)
+Clases:
 
-Efectos de sonido (Observer)
+-   `VehiculoFactory`\
+-   `CarroFactory`\
+-   `MotoFactory`\
+-   `BicicletaFactory`
 
-Animaciones transicionales mejoradas
+**Razón:** Centralizar cómo se crean los vehículos y sus parámetros.
+
+------------------------------------------------------------------------
+
+### ✔️ 6. Facade --- `ImageFacade`
+
+Abstrae la carga de imágenes.
+
+**Razón:** Evita duplicar código y simplifica manejo de errores.
+
+------------------------------------------------------------------------
+
+## ❌ Patrones GoF NO implementados y por qué
+
+El proyecto no requiere los 23 patrones GoF.\
+Los restantes no se implementaron por estas razones:
+
+### 🟥 Patrones Creacionales no usados
+
+-   **Prototype:** No se necesita clonación masiva.\
+-   **Builder:** No hay objetos con construcción compleja.
+
+### 🟥 Patrones Estructurales no usados
+
+-   **Adapter:** No se integran librerías incompatibles.\
+-   **Bridge:** No se requiere desacoplar plataformas.\
+-   **Composite:** No existen estructuras jerárquicas.\
+-   **Flyweight:** No hay alto volumen de objetos repetidos.\
+-   **Proxy:** No se manipulan recursos remotos/pesados.
+
+### 🟥 Patrones Comportamentales no usados
+
+-   **Chain of Responsibility:** No hay cadenas de responsabilidad.\
+-   **State:** Los estados del juego son simples.\
+-   **Mediator:** La comunicación actual ya es simple con GameManager.\
+-   **Memento:** No hay guardado/restauración del estado.\
+-   **Interpreter / Visitor:** No se procesan lenguajes ni jerarquías
+    complejas.\
+-   **Command:** Las acciones son simples y directas.
+
+------------------------------------------------------------------------
+
+## 👥 Integrantes del Proyecto
+
+-   **Kaleth Molina Diaz - 20232020096**\
+-   **Nelson David Molina Ramos - 20222020121**
+
