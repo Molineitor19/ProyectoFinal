@@ -3,9 +3,8 @@
 ![Java](https://img.shields.io/badge/Java-ED8B00?style=flat&logo=openjdk&logoColor=white)
 ![Swing](https://img.shields.io/badge/Java%20Swing-FF9800?style=flat&logo=java&logoColor=white)
 ![Design Patterns](https://img.shields.io/badge/Design%20Patterns-GoF-blueviolet?style=flat)
-![License](https://img.shields.io/badge/License-MIT-green)
 
-**Un juego de destreza y reflejos desarrollado en Java con arquitectura profesional.**
+**Un juego de destreza y reflejos desarrollado en Java.**
 
 ---
 
@@ -74,3 +73,28 @@ Control centralizado del juego:
 ```java
 GameManager.getInstance();
 
+Observer – Notificaciones
+
+gameManager.agregarObservador(vista);
+gameManager.notificar("puntos", 100);
+
+Strategy – Movimiento de Enemigos
+
+interface EnemyMovementStrategy { void mover(); }
+
+Factory Method – Creación de Vehículos
+
+VehiculoFactory factory = new CarroFactory();
+
+Facade – Manejo de Recursos
+
+Image img = ImageFacade.cargar("/ruta.png");
+
+Patrones No Implementados
+Patrón	Motivo
+Builder	No hay construcción compleja
+Composite	No hay jerarquías
+State	Estados simples
+Command	Acciones simples
+Memento	No hay guardado
+Visitor	No se requiere
