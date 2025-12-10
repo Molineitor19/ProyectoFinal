@@ -103,7 +103,45 @@ Estrategias incluidas:
 Movimiento recto
 
 ZigZag
-
+---
 Decorator – Mejoras de Vehículos
 
 Extiende comportamiento sin modificar la clase base.
+
+```java
+
+Desplazamiento vehiculo = new Carro();
+vehiculo = new TurboDecorator(vehiculo);
+```
+---
+
+Factory Method – Creación de Vehículos
+
+Centraliza la construcción de objetos vehículo.
+
+```java
+
+VehiculoFactory factory = new CarroFactory();
+Vehiculo carro = factory.crearVehiculo();
+
+```
+
+Facade – Manejo de Recursos
+
+Simplifica carga de imágenes y manejo de archivos.
+
+```java
+
+Image imagen = ImageFacade.cargar("/ruta/imagen.png");
+
+```
+### Patrones No Implementados
+
+| Patrón    | Razón                                         |
+|-----------|-----------------------------------------------|
+| Builder   | No hay construcción compleja                  |
+| Composite | No existen jerarquías profundas               |
+| State     | Estados manejados directamente                |
+| Command   | No se requieren acciones encapsuladas         |
+| Memento   | No hay sistema de guardado                    |
+| Visitor   | No se recorren estructuras complejas          |
