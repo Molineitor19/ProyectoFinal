@@ -1,188 +1,109 @@
-#  README - Proyecto "No Choques"
 
-##  Descripción del Proyecto
+# No Choques - Videojuego de Esquivar Obstáculos
 
-**No Choques** es un videojuego desarrollado en Java Swing, donde el
-jugador controla un vehículo (carro, moto o bicicleta --- cada uno con
-variantes estándar y PRO) y debe esquivar obstáculos que aparecen desde
-la derecha de la pantalla.
+![Java](https://img.shields.io/badge/Java-ED8B00?style=flat&logo=openjdk&logoColor=white)
+![Swing](https://img.shields.io/badge/Java%20Swing-FF9800?style=flat&logo=java&logoColor=white)
+![Design Patterns](https://img.shields.io/badge/Design%20Patterns-GoF-blueviolet?style=flat)
 
-El juego incluye:
 
--   Un menú principal estilizado\
--   Selector de vehículos\
--   Animaciones del jugador y enemigos\
--   Sistema de puntuación y vidas\
--   Cambio de control (mouse/teclado)\
--   Pantalla Game Over personalizada\
--   Arquitectura con varios patrones de diseño GoF
+**Un juego de destreza y reflejos desarrollado en Java con arquitectura profesional.**
 
-El objetivo es resistir el mayor tiempo posible esquivando obstáculos y
-acumulando puntos.
+---
 
-##  Cómo Funciona el Juego
+## Tabla de Contenidos
+- Vista General
+- Características Principales
+- Arquitectura y Patrones
+- Mecánicas de Juego
+- Cómo Ejecutar
+- Estructura del Proyecto
+- Integrantes
+- Contacto y Contribuciones
+- Métricas del Proyecto
+- Futuras Mejoras
 
-### 1. Menú Principal
+---
 
-Permite: - Iniciar el juego\
-- Seleccionar vehículo\
-- Salir
+## Vista General
 
-Los botones tienen estilo personalizado
+**No Choques** es un videojuego arcade desarrollado en Java Swing donde el jugador controla un vehículo que debe esquivar obstáculos en una carretera infinita.
 
-------------------------------------------------------------------------
+**Objetivo:** sobrevivir el mayor tiempo posible acumulando puntos.
 
-### 2. Selector de Vehículos
+---
 
-El jugador puede elegir entre 6 vehículos:
+## Características Principales
 
--   Carro\
--   Carro Pro\
--   Moto\
--   Moto Pro\
--   Bicicleta\
--   Bicicleta Pro
+### Interfaz Visual Mejorada
+- Menú principal con efectos visuales y gradientes  
+- Selector de vehículos con tarjetas interactivas  
+- Sistema de puntuación en tiempo real  
+- Diálogos personalizados y animaciones  
+- Modo pantalla completa opcional  
 
-Cada vehículo modifica: - **Velocidad de movimiento (paso)**\
-- **Velocidad de animación (delay)**\
-- **Sprites**
+### Sistema de Control Dual
+- **Mouse:** movimiento vertical  
+- **Teclado:** flechas para movimiento completo  
+- **M:** alternar entre teclado y mouse  
 
-------------------------------------------------------------------------
+### Sistema de Vehículos
 
-### 3. Vista del Juego
+| Vehículo | Variante | Velocidad | Característica |
+|---------|----------|-----------|----------------|
+| Carro   | Normal   | Media     | Tamaño grande, estable |
+| Carro   | Pro      | Alta      | Mejor aceleración |
+| Moto    | Normal   | Alta      | Ágil, tamaño pequeño |
+| Moto    | Pro      | Máxima    | Velocidad extrema |
+| Bici    | Normal   | Baja      | Maniobrabilidad excelente |
+| Bici    | Pro      | Media     | Balance perfecto |
 
-La clase `Vista` contiene la lógica principal:
+### Sistema de Progresión
+- Puntos por obstáculos esquivados  
+- Sistema de vidas (actualmente 1 vida)  
+- Puntuación persistente por sesión  
+- Pantalla de Game Over con opciones  
 
--   Animación del jugador\
--   Movimiento por teclado o mouse\
--   Aparición y movimiento de enemigos\
--   Detección de colisiones\
--   Actualización de puntuación y vidas\
--   Gestión del Game Over
+---
 
-Los enemigos reaparecen cuando salen de pantalla y otorgan puntos si son
-esquivados.
+## Arquitectura y Patrones
 
-------------------------------------------------------------------------
+### Patrones Implementados
 
-### 4. Game Over
+#### **Singleton – GameManager**
+Control centralizado del estado del juego.
 
-Incluye una ventana personalizada con 3 opciones:
+```java
+GameManager.getInstance();
 
--   Reiniciar\
--   Volver al menú\
--   Salir
+```
+Administra puntuación, vidas y estado general.
 
-------------------------------------------------------------------------
+Observer – Sistema de Notificaciones
 
-## 🧩 Patrones GoF Implementados
+Comunicación desacoplada entre componentes.
 
-### ✔️ 1. Singleton --- `GameManager`
+```java
+gameManager.agregarObservador(vista);
+gameManager.notificar("puntos", 100);
 
-Administra:
+```
+Actualiza la interfaz en tiempo real.
 
--   Puntuación\
--   Vidas\
--   Estado del juego
+Strategy – Comportamiento de Enemigos
 
-Solo existe una instancia global.
+Permite intercambiar algoritmos de movimiento.
 
-**Razón:** El estado del juego debe ser único y accesible desde
-cualquier parte.
+```java
+interface EnemyMovementStrategy {
+    void mover();
+}
+```
+Estrategias incluidas:
 
-------------------------------------------------------------------------
+Movimiento recto
 
-### ✔️ 2. Observer --- `SujetoObservable`, `Observador`, `Vista`
+ZigZag
 
-El `GameManager` notifica a las vistas cuando:
+Decorator – Mejoras de Vehículos
 
--   Cambia la puntuación\
--   Cambian las vidas\
--   Ocurre el Game Over
-
-**Razón:** Desacoplar la lógica del juego de la interfaz gráfica.
-
-------------------------------------------------------------------------
-
-### ✔️ 3. Strategy --- Movimiento de enemigos
-
-Clases:
-
--   `EnemyMovementStrategy`\
--   `StraightMovement`\
--   `ZigZagMovement`
-
-**Razón:** Permitir diferentes comportamientos de movimiento sin
-modificar la clase Enemy.
-
-------------------------------------------------------------------------
-
-### ✔️ 4. Decorator --- Sistema de vehículos
-
-Clases:
-
--   `Desplazamiento`\
--   `DesplazamientoDecorator`\
--   `Carro`, `Moto`, `Bicicleta`
-
-**Razón:** Extender dinámicamente el comportamiento del movimiento sin
-alterar el personaje base.
-
-------------------------------------------------------------------------
-
-### ✔️ 5. Abstract Factory / Factory Method --- Fabricación de vehículos
-
-Clases:
-
--   `VehiculoFactory`\
--   `CarroFactory`\
--   `MotoFactory`\
--   `BicicletaFactory`
-
-**Razón:** Centralizar cómo se crean los vehículos y sus parámetros.
-
-------------------------------------------------------------------------
-
-### ✔️ 6. Facade --- `ImageFacade`
-
-Abstrae la carga de imágenes.
-
-**Razón:** Evita duplicar código y simplifica manejo de errores.
-
-------------------------------------------------------------------------
-
-## ❌ Patrones GoF NO implementados y por qué
-
-El proyecto no requiere los 23 patrones GoF.\
-Los restantes no se implementaron por estas razones:
-
-### 🟥 Patrones Creacionales no usados
-
--   **Prototype:** No se necesita clonación masiva.\
--   **Builder:** No hay objetos con construcción compleja.
-
-### 🟥 Patrones Estructurales no usados
-
--   **Adapter:** No se integran librerías incompatibles.\
--   **Bridge:** No se requiere desacoplar plataformas.\
--   **Composite:** No existen estructuras jerárquicas.\
--   **Flyweight:** No hay alto volumen de objetos repetidos.\
--   **Proxy:** No se manipulan recursos remotos/pesados.
-
-### 🟥 Patrones Comportamentales no usados
-
--   **Chain of Responsibility:** No hay cadenas de responsabilidad.\
--   **State:** Los estados del juego son simples.\
--   **Mediator:** La comunicación actual ya es simple con GameManager.\
--   **Memento:** No hay guardado/restauración del estado.\
--   **Interpreter / Visitor:** No se procesan lenguajes ni jerarquías
-    complejas.\
--   **Command:** Las acciones son simples y directas.
-
-------------------------------------------------------------------------
-
-## 👥 Integrantes del Proyecto
-
--   **Kaleth Molina Diaz - 20232020096**\
--   **Nelson David Molina Ramos - 20222020121**
-
+Extiende comportamiento sin modificar la clase base.
