@@ -156,26 +156,24 @@ Image imagen = ImageFacade.cargar("/ruta/imagen.png");
 | ESC            | Salir de pantalla completa       |
 
 ### Sistema de Puntuacion
-
-+---------------+---------------+-------------------+
-|   Acción      |   Puntos      |   Descripción     |
-+---------------+---------------+-------------------+
-|  Esquivar     |   +10         | Por obstáculo     |
-|  Sobrevivir   |  Tiempo x 1   | Cada segundo vivo |
-|  Colisión     |   Game Over   | Fin del juego     |
-+---------------+---------------+-------------------+
+| Acción      | Puntos      | Descripción        |
+|-------------|-------------|---------------------|
+| Esquivar    | +10         | Por cada obstáculo  |
+| Sobrevivir  | Tiempo × 1  | Cada segundo vivo   |
+| Colisión    | Game Over   | Fin del juego       |
 
 ### Flujo del juego
+Menú Principal  
+      ↓  
+Selector de Vehículo  
+      ↓  
+Juego en Progreso  
+      ↓  
+¿Colisión? → Game Over  
+      ↓  
+[Reiniciar] – [Volver al Menú] – [Salir]
 
-graph TD
-    A[Menú Principal] --> B[Selector de Vehículo]
-    B --> C[Juego en Progreso]
-    C --> D{¿Colisión?}
-    D -->|No| C
-    D -->|Sí| E[Game Over]
-    E --> F{¿Qué hacer?}
-    F -->|Reiniciar| C
-    F -->|Volver al Menú| A
-    F -->|Salir| G[Fin]
+
+
 
 
