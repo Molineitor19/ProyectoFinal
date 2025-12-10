@@ -175,23 +175,65 @@ Juego en Progreso
 
 ### Cómo Ejecutar
 
-Prerrequisitos
+### Prerrequisitos
 
-Java JDK 8 o superior
+- Java JDK 8 o superior
 
-Cualquier IDE (IntelliJ, Eclipse, NetBeans) o línea de comandos
+- Cualquier IDE (IntelliJ, Eclipse, NetBeans) o línea de comandos
 
-Pasos de Ejecución
+### Pasos de Ejecución
 
-Clonar o descargar el proyecto
+1 - Clonar o descargar el proyecto
 
-Abrir en tu IDE
+2 - Abrir en tu IDE
 
-Compilar
+3 - Compilar
 
-Ejecutar MenuPrincipal.java
+4 - Ejecutar MenuPrincipal.java
 
 Compilación por Consola
+
+```bash
+# Compilar
+javac -d bin src/**/*.java
+
+# Ejecutar
+java -cp bin Vista.MenuPrincipal
+```
+---
+### Estructura del Proyecto
+```bash
+src/
+├── Vista/
+│   ├── MenuPrincipal.java
+│   ├── Vista.java
+│   ├── SelectorVehiculo.java
+│   └── GameOverDialog.java
+├── adaptadores/
+│   ├── ControlTeclado.java
+│   ├── ControlMouse.java
+│   └── MovimientoJugador.java
+├── controlador/
+│   ├── GameManager.java
+│   └── ImageFacade.java
+├── enemigos/
+│   ├── Enemy.java
+│   ├── EnemyMovementStrategy.java
+│   └── StraightMovement.java
+├── fabrica/
+│   ├── VehiculoFactory.java
+│   └── Factories específicas
+├── modelo/
+│   ├── Desplazamiento.java
+│   ├── DesplazamientoDecorator.java
+│   └── Vehículos
+├── observador/
+│   ├── Observador.java
+│   ├── SujetoObservable.java
+│   └── ObservadorPuntuacion.java
+└── Imagenes/imagenes/
+```
+
 
 
 
