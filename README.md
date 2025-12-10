@@ -173,7 +173,25 @@ Juego en Progreso
       ↓  
 [Reiniciar] – [Volver al Menú] – [Salir]
 
+### Cómo Ejecutar
 
+Prerrequisitos
+
+Java JDK 8 o superior
+
+Cualquier IDE (IntelliJ, Eclipse, NetBeans) o línea de comandos
+
+Pasos de Ejecución
+
+Clonar o descargar el proyecto
+
+Abrir en tu IDE
+
+Compilar
+
+Ejecutar MenuPrincipal.java
+
+Compilación por Consola
 
 
 
