@@ -46,12 +46,12 @@ public class MenuPrincipal extends JFrame {
     private JButton btnIniciar, btnVehiculo, btnSalir;
     private String vehiculoSeleccionado = "carro";
     private PanelFondo fondo;
+    private JLabel lblInfoVehiculo; // Referencia al label para actualizarlo
 
     public MenuPrincipal() {
         setTitle("Menú ");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         
-        // Quitamos MAXIMIZED_BOTH y UNDECORATED para evitar problemas
         setSize(1200, 700);
         setLocationRelativeTo(null);
         
@@ -72,7 +72,7 @@ public class MenuPrincipal extends JFrame {
     private JPanel crearPanelContenido() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setOpaque(false); // Transparente para ver el fondo
+        panel.setOpaque(false);
         panel.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
         
         // Título
@@ -136,11 +136,11 @@ public class MenuPrincipal extends JFrame {
         botonesPanel.add(Box.createVerticalStrut(20));
         
         // Información del vehículo
-        JLabel infoVehiculo = new JLabel("Vehículo actual: " + vehiculoSeleccionado.toUpperCase());
-        infoVehiculo.setFont(new Font("Arial", Font.PLAIN, 14));
-        infoVehiculo.setForeground(new Color(200, 220, 255));
-        infoVehiculo.setAlignmentX(Component.CENTER_ALIGNMENT);
-        botonesPanel.add(infoVehiculo);
+        lblInfoVehiculo = new JLabel("Vehículo actual: " + vehiculoSeleccionado.toUpperCase());
+        lblInfoVehiculo.setFont(new Font("Arial", Font.PLAIN, 14));
+        lblInfoVehiculo.setForeground(new Color(200, 220, 255));
+        lblInfoVehiculo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        botonesPanel.add(lblInfoVehiculo);
         
         // Añadir panel de botones al panel principal
         panel.add(botonesPanel);
@@ -212,46 +212,69 @@ public class MenuPrincipal extends JFrame {
     }
     
     private void iniciarJuego() {
-    // Cerrar menú
-    dispose();
-    
-    // Abrir juego en nuevo hilo
-    SwingUtilities.invokeLater(() -> {
-        JFrame ventanaJuego = new JFrame("Juego - " + vehiculoSeleccionado.toUpperCase());
-        Vista panelJuego = new Vista(vehiculoSeleccionado);
+        System.out.println("Iniciando juego con vehículo: " + vehiculoSeleccionado);
         
-        ventanaJuego.add(panelJuego);
+        // Cerrar menú
+        dispose();
         
-        // OPCIÓN 1: Pantalla completa simple (recomendada)
-        ventanaJuego.setUndecorated(true);
-        ventanaJuego.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        
-        // OPCIÓN 2: Pantalla completa exclusiva (más avanzada)
-        // GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-        // if (gd.isFullScreenSupported()) {
-        //     ventanaJuego.setUndecorated(true);
-        //     gd.setFullScreenWindow(ventanaJuego);
-        // } else {
-        //     ventanaJuego.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        // }
-        
-        ventanaJuego.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ventanaJuego.setVisible(true);
-        
-        // Enfocar el panel para que capte las teclas inmediatamente
-        panelJuego.requestFocusInWindow();
-    });
-}
-
-    private void abrirSelectorVehiculo() {
-        setVisible(false);
-        new SelectorVehiculo(this);
+        // Abrir juego
+        SwingUtilities.invokeLater(() -> {
+            JFrame ventanaJuego = new JFrame("Juego - " + vehiculoSeleccionado.toUpperCase());
+            Vista panelJuego = new Vista(vehiculoSeleccionado);
+            
+            ventanaJuego.add(panelJuego);
+            
+            // Pantalla completa
+            ventanaJuego.setUndecorated(true);
+            ventanaJuego.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            
+            ventanaJuego.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            ventanaJuego.setVisible(true);
+            
+            // Enfocar el panel para que capte las teclas
+            panelJuego.requestFocusInWindow();
+        });
     }
     
-    public void setVehiculo(String tipo) {
-    System.out.println("Vehículo seleccionado: " + tipo);
-    // Tu lógica aquí...
-}
+    private void abrirSelectorVehiculo() {
+        System.out.println("Abriendo selector de vehículo...");
+        this.setVisible(false); // Ocultar menú
+        new SelectorVehiculo(this); // Pasar referencia de MenuPrincipal
+    }
+    
+    // Método CORREGIDO para actualizar el vehículo seleccionado
+    public void setVehiculo(String tipoVehiculo) {
+        System.out.println("Actualizando vehículo en MenuPrincipal a: " + tipoVehiculo);
+        
+        // Actualizar variable
+        this.vehiculoSeleccionado = tipoVehiculo;
+        
+        // Actualizar texto del label
+        if (lblInfoVehiculo != null) {
+            String nombreMostrar = tipoVehiculo.toUpperCase();
+            // Mejorar nombres para mostrar
+            if (tipoVehiculo.equals("carro")) nombreMostrar = "CARRO";
+            else if (tipoVehiculo.equals("carroPro")) nombreMostrar = "CARRO PRO";
+            else if (tipoVehiculo.equals("moto")) nombreMostrar = "MOTO";
+            else if (tipoVehiculo.equals("motoPro")) nombreMostrar = "MOTO PRO";
+            else if (tipoVehiculo.equals("bicicleta")) nombreMostrar = "BICICLETA";
+            else if (tipoVehiculo.equals("bicicletaPro")) nombreMostrar = "BICICLETA PRO";
+            
+            lblInfoVehiculo.setText("Vehículo actual: " + nombreMostrar);
+            lblInfoVehiculo.repaint();
+        }
+        
+        // Forzar repintado
+        this.revalidate();
+        this.repaint();
+        
+        System.out.println("Vehículo actualizado correctamente a: " + vehiculoSeleccionado);
+    }
+    
+    // Método para obtener el vehículo seleccionado
+    public String getVehiculoSeleccionado() {
+        return vehiculoSeleccionado;
+    }
     
     public static void main(String[] args) {
         mostrarMenu();

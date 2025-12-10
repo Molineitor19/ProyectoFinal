@@ -40,8 +40,8 @@ public class Vista extends JPanel implements ActionListener, KeyListener, MouseM
     
     // Límites para enemigos
     private static final int ENEMIGO_MIN_Y = 290;
-    private static final int ENEMIGO_MAX_Y = 520;
-    private static final int ENEMIGO_MIN_X = 1000; // Aparecen desde la derecha
+    private static final int ENEMIGO_MAX_Y = 600;
+    private static final int ENEMIGO_MIN_X = 1200; // Aparecen desde la derecha
     private static final int ENEMIGO_MAX_X = 1500; // Máxima posición inicial
     
     // Distancia mínima entre enemigos
@@ -96,7 +96,7 @@ public class Vista extends JPanel implements ActionListener, KeyListener, MouseM
             }
             case "carroPro" -> {
                 framesJugador = cargarFrames(
-                   "carrotuneado2.png","carrotuneado3.png"
+                   "carrotuneado1.png","carrotuneado2.png","carrotuneado3.png"
                 );
                 delay = 1;
                 paso = 80;
