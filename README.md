@@ -1,124 +1,188 @@
-# Simulación Decorator - Movimiento de Vehículos
+#  README - Proyecto "No Choques"
 
-## Descripción del Proyecto
+##  Descripción del Proyecto
 
-Este proyecto implementa una simulación gráfica que demuestra el funcionamiento del **Patrón de Diseño Decorator** en **Java SE**.  
-La aplicación muestra diferentes vehículos desplazándose a través de una interfaz construida con **JFrame (Swing)**, donde cada tipo de vehículo tiene una velocidad distinta.  
-El proyecto fue desarrollado en **NetBeans IDE** y utiliza **Apache Tomcat** para pruebas locales o despliegue de componentes.
+**No Choques** es un videojuego desarrollado en Java Swing, donde el
+jugador controla un vehículo (carro, moto o bicicleta --- cada uno con
+variantes estándar y PRO) y debe esquivar obstáculos que aparecen desde
+la derecha de la pantalla.
 
----
+El juego incluye:
 
-## Tecnologías Utilizadas
+-   Un menú principal estilizado\
+-   Selector de vehículos\
+-   Animaciones del jugador y enemigos\
+-   Sistema de puntuación y vidas\
+-   Cambio de control (mouse/teclado)\
+-   Pantalla Game Over personalizada\
+-   Arquitectura con varios patrones de diseño GoF
 
-| Componente | Descripción |
-|-------------|-------------|
-| **Lenguaje** | Java SE |
-| **Entorno de desarrollo** | NetBeans IDE |
-| **Servidor** | Apache Tomcat (para pruebas locales o despliegue de componentes) |
-| **Interfaz gráfica** | JFrame (Swing) |
-| **Patrón de diseño** | Decorator |
+El objetivo es resistir el mayor tiempo posible esquivando obstáculos y
+acumulando puntos.
 
----
+##  Cómo Funciona el Juego
 
-## Objetivo
+### 1. Menú Principal
 
-El objetivo principal es ilustrar el uso del **Patrón Decorator** mediante una animación visual en la que diversos vehículos (bicicletas, motos y carros) se mueven por la pantalla con diferentes velocidades.  
-Cada vehículo reaparece desde el lado izquierdo una vez cruza la pantalla, y aleatoriamente puede aparecer otro vehículo o el mismo con una velocidad distinta.
+Permite: - Iniciar el juego\
+- Seleccionar vehículo\
+- Salir
 
----
+Los botones tienen estilo personalizado
 
-## Clasificación de Velocidades
+------------------------------------------------------------------------
 
-Cada vehículo posee una velocidad relativa, determinada según su tipo y si tiene mejoras (pro o tuneado):
+### 2. Selector de Vehículos
 
-| Vehículo         | Velocidad Relativa     |
-|------------------|------------------------|
-| Bicicleta normal | Muy lenta              |
-| Bicicleta pro    | Lenta                  |
-| Moto normal      | Media                  |
-| Carro normal     | Rápida                 |
-| Carro tuneado    | Muy rápida             |
-| Moto pro         | La más veloz           |
+El jugador puede elegir entre 6 vehículos:
 
----
+-   Carro\
+-   Carro Pro\
+-   Moto\
+-   Moto Pro\
+-   Bicicleta\
+-   Bicicleta Pro
 
-## Estructura del Proyecto
+Cada vehículo modifica: - **Velocidad de movimiento (paso)**\
+- **Velocidad de animación (delay)**\
+- **Sprites**
 
-## Estructura del proyecto
+------------------------------------------------------------------------
 
-```
-src/
-PatronDecoratorDesplazamiento
-├── Imagenes.imagenes # Carpeta de recursos gráficos (sprites y fondos)
-│
-├── Vista # Interfaz gráfica
-│ └── Vista.java
-│
-├── controlador # Clase principal de ejecución
-│ └── AplMain.java
-│
-└── modelo # Clases del modelo y patrón Decorator
-├── Bicicleta.java
-├── Carro.java
-├── Moto.java
-├── Personaje.java
-├── Desplazamiento.java
-└── DesplazamientoDecorator.java
+### 3. Vista del Juego
 
-```
+La clase `Vista` contiene la lógica principal:
 
----
+-   Animación del jugador\
+-   Movimiento por teclado o mouse\
+-   Aparición y movimiento de enemigos\
+-   Detección de colisiones\
+-   Actualización de puntuación y vidas\
+-   Gestión del Game Over
 
+Los enemigos reaparecen cuando salen de pantalla y otorgan puntos si son
+esquivados.
 
+------------------------------------------------------------------------
 
----
+### 4. Game Over
 
-## Funcionamiento del Patrón Decorator
+Incluye una ventana personalizada con 3 opciones:
 
-El **Patrón Decorator** permite agregar comportamientos adicionales a un objeto sin modificar su estructura original.  
-En este caso, se aplica para cambiar dinámicamente la velocidad de desplazamiento de los vehículos.
+-   Reiniciar\
+-   Volver al menú\
+-   Salir
 
-- `Desplazamiento`: interfaz base que define el método de movimiento.  
-- `Personaje`: clase concreta que representa un vehículo básico.  
-- `DesplazamientoDecorator`: clase abstracta que extiende el comportamiento del objeto base.  
-- Subclases decoradoras: modifican la velocidad para simular versiones mejoradas (pro o tuneadas).
+------------------------------------------------------------------------
 
-Este diseño facilita la extensión de características sin alterar las clases principales, fomentando la **flexibilidad**, **reutilización del código** y **principios SOLID**.
+## 🧩 Patrones GoF Implementados
 
----
+### ✔️ 1. Singleton --- `GameManager`
 
-## Ejecución del Proyecto
+Administra:
 
-1. Clonar el repositorio:
-   ```bash
-   https://github.com/Molineitor19/PatronDecorate.git
-Abrir el proyecto en NetBeans IDE.
+-   Puntuación\
+-   Vidas\
+-   Estado del juego
 
-Verificar que esté configurado Apache Tomcat (si se desea usar para despliegue).
+Solo existe una instancia global.
 
-Ejecutar la clase principal:
+**Razón:** El estado del juego debe ser único y accesible desde
+cualquier parte.
 
-Copiar código
-controlador/AplMain.java
-Observar la simulación donde los vehículos se desplazan y reaparecen con distintas velocidades de manera aleatoria.
+------------------------------------------------------------------------
 
-Requisitos
-Java JDK 8 o superior
+### ✔️ 2. Observer --- `SujetoObservable`, `Observador`, `Vista`
 
-NetBeans 12 o superior
+El `GameManager` notifica a las vistas cuando:
 
-Apache Tomcat 9 o superior
+-   Cambia la puntuación\
+-   Cambian las vidas\
+-   Ocurre el Game Over
 
-Sistema operativo compatible con Swing (Windows / Linux / MacOS)
+**Razón:** Desacoplar la lógica del juego de la interfaz gráfica.
 
-Vista de Ejemplo
+------------------------------------------------------------------------
 
-<img width="959" height="501" alt="image" src="https://github.com/user-attachments/assets/bbb33334-4adb-4752-9aab-80b196862ce5" />
+### ✔️ 3. Strategy --- Movimiento de enemigos
 
+Clases:
 
+-   `EnemyMovementStrategy`\
+-   `StraightMovement`\
+-   `ZigZagMovement`
 
-Autores
+**Razón:** Permitir diferentes comportamientos de movimiento sin
+modificar la clase Enemy.
 
-Kaleth Molina — Código: 20232020096
+------------------------------------------------------------------------
 
-Nelson Molina — Código: 20222020121
+### ✔️ 4. Decorator --- Sistema de vehículos
+
+Clases:
+
+-   `Desplazamiento`\
+-   `DesplazamientoDecorator`\
+-   `Carro`, `Moto`, `Bicicleta`
+
+**Razón:** Extender dinámicamente el comportamiento del movimiento sin
+alterar el personaje base.
+
+------------------------------------------------------------------------
+
+### ✔️ 5. Abstract Factory / Factory Method --- Fabricación de vehículos
+
+Clases:
+
+-   `VehiculoFactory`\
+-   `CarroFactory`\
+-   `MotoFactory`\
+-   `BicicletaFactory`
+
+**Razón:** Centralizar cómo se crean los vehículos y sus parámetros.
+
+------------------------------------------------------------------------
+
+### ✔️ 6. Facade --- `ImageFacade`
+
+Abstrae la carga de imágenes.
+
+**Razón:** Evita duplicar código y simplifica manejo de errores.
+
+------------------------------------------------------------------------
+
+## ❌ Patrones GoF NO implementados y por qué
+
+El proyecto no requiere los 23 patrones GoF.\
+Los restantes no se implementaron por estas razones:
+
+### 🟥 Patrones Creacionales no usados
+
+-   **Prototype:** No se necesita clonación masiva.\
+-   **Builder:** No hay objetos con construcción compleja.
+
+### 🟥 Patrones Estructurales no usados
+
+-   **Adapter:** No se integran librerías incompatibles.\
+-   **Bridge:** No se requiere desacoplar plataformas.\
+-   **Composite:** No existen estructuras jerárquicas.\
+-   **Flyweight:** No hay alto volumen de objetos repetidos.\
+-   **Proxy:** No se manipulan recursos remotos/pesados.
+
+### 🟥 Patrones Comportamentales no usados
+
+-   **Chain of Responsibility:** No hay cadenas de responsabilidad.\
+-   **State:** Los estados del juego son simples.\
+-   **Mediator:** La comunicación actual ya es simple con GameManager.\
+-   **Memento:** No hay guardado/restauración del estado.\
+-   **Interpreter / Visitor:** No se procesan lenguajes ni jerarquías
+    complejas.\
+-   **Command:** Las acciones son simples y directas.
+
+------------------------------------------------------------------------
+
+## 👥 Integrantes del Proyecto
+
+-   **Kaleth Molina Diaz - 20232020096**\
+-   **Nelson David Molina Ramos - 20222020121**
+
