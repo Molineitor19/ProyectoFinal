@@ -1,188 +1,70 @@
-#  README - Proyecto "No Choques"
+No Choques - Videojuego de Esquivar Obstáculos
+<div align="center">
+https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white
+https://img.shields.io/badge/Java%2520Swing-FF9800?style=for-the-badge&logo=java&logoColor=white
+https://img.shields.io/badge/Design%2520Patterns-GoF-blueviolet?style=for-the-badge
+https://img.shields.io/badge/License-MIT-green?style=for-the-badge
 
-##  Descripción del Proyecto
+Un juego de destreza y reflejos desarrollado en Java con arquitectura profesional
 
-**No Choques** es un videojuego desarrollado en Java Swing, donde el
-jugador controla un vehículo (carro, moto o bicicleta --- cada uno con
-variantes estándar y PRO) y debe esquivar obstáculos que aparecen desde
-la derecha de la pantalla.
+</div>
+📋 Tabla de Contenidos
+🎮 Vista General
 
-El juego incluye:
+✨ Características Principales
 
--   Un menú principal estilizado\
--   Selector de vehículos\
--   Animaciones del jugador y enemigos\
--   Sistema de puntuación y vidas\
--   Cambio de control (mouse/teclado)\
--   Pantalla Game Over personalizada\
--   Arquitectura con varios patrones de diseño GoF
+🏗️ Arquitectura y Patrones
 
-El objetivo es resistir el mayor tiempo posible esquivando obstáculos y
-acumulando puntos.
+🎯 Mecánicas de Juego
 
-##  Cómo Funciona el Juego
+🚀 Cómo Ejecutar
 
-### 1. Menú Principal
+📁 Estructura del Proyecto
 
-Permite: - Iniciar el juego\
-- Seleccionar vehículo\
-- Salir
+👨‍💻 Integrantes
 
-Los botones tienen estilo personalizado
+🎮 Vista General
+No Choques es un videojuego arcade desarrollado en Java Swing donde el jugador controla un vehículo que debe esquivar obstáculos en una carretera infinita. Con gráficos atractivos, controles intuitivos y un sistema de progresión, ofrece una experiencia de juego envolvente y desafiante.
 
-------------------------------------------------------------------------
+⚡ Objetivo: Sobrevivir el mayor tiempo posible acumulando puntos y demostrando tus reflejos.
 
-### 2. Selector de Vehículos
+✨ Características Principales
+🎨 Interfaz Visual Mejorada
+✅ Menú principal con efectos visuales y gradientes
 
-El jugador puede elegir entre 6 vehículos:
+✅ Selector de vehículos con tarjetas interactivas
 
--   Carro\
--   Carro Pro\
--   Moto\
--   Moto Pro\
--   Bicicleta\
--   Bicicleta Pro
+✅ Sistema de puntuación en tiempo real
 
-Cada vehículo modifica: - **Velocidad de movimiento (paso)**\
-- **Velocidad de animación (delay)**\
-- **Sprites**
+✅ Diálogos personalizados y animaciones
 
-------------------------------------------------------------------------
+✅ Modo pantalla completa opcional
 
-### 3. Vista del Juego
+🎮 Sistema de Control Dual
+🖱️ Control por Mouse: Movimiento vertical intuitivo
 
-La clase `Vista` contiene la lógica principal:
+⌨️ Control por Teclado: Flechas para movimiento completo
 
--   Animación del jugador\
--   Movimiento por teclado o mouse\
--   Aparición y movimiento de enemigos\
--   Detección de colisiones\
--   Actualización de puntuación y vidas\
--   Gestión del Game Over
+🔄 Cambio dinámico: Tecla M para alternar entre modos
 
-Los enemigos reaparecen cuando salen de pantalla y otorgan puntos si son
-esquivados.
+🚗 Sistema de Vehículos
+Vehículo	Variante	Velocidad	Característica
+🚗 Carro	Normal	Media	Tamaño grande, estabilidad
+🚗 Carro	Pro	Alta	Mejor aceleración y control
+🏍️ Moto	Normal	Alta	Tamaño pequeño, ágil
+🏍️ Moto	Pro	Máxima	Velocidad extrema
+🚲 Bici	Normal	Baja	Maniobrabilidad excelente
+🚲 Bici	Pro	Media	Balance perfecto
+📊 Sistema de Progresión
+✅ Puntos por obstáculos esquivados
 
-------------------------------------------------------------------------
+✅ Sistema de vidas (actualmente 1 vida)
 
-### 4. Game Over
+✅ Puntuación persistente por sesión
 
-Incluye una ventana personalizada con 3 opciones:
+✅ Game Over con opciones claras
 
--   Reiniciar\
--   Volver al menú\
--   Salir
-
-------------------------------------------------------------------------
-
-## 🧩 Patrones GoF Implementados
-
-### ✔️ 1. Singleton --- `GameManager`
-
-Administra:
-
--   Puntuación\
--   Vidas\
--   Estado del juego
-
-Solo existe una instancia global.
-
-**Razón:** El estado del juego debe ser único y accesible desde
-cualquier parte.
-
-------------------------------------------------------------------------
-
-### ✔️ 2. Observer --- `SujetoObservable`, `Observador`, `Vista`
-
-El `GameManager` notifica a las vistas cuando:
-
--   Cambia la puntuación\
--   Cambian las vidas\
--   Ocurre el Game Over
-
-**Razón:** Desacoplar la lógica del juego de la interfaz gráfica.
-
-------------------------------------------------------------------------
-
-### ✔️ 3. Strategy --- Movimiento de enemigos
-
-Clases:
-
--   `EnemyMovementStrategy`\
--   `StraightMovement`\
--   `ZigZagMovement`
-
-**Razón:** Permitir diferentes comportamientos de movimiento sin
-modificar la clase Enemy.
-
-------------------------------------------------------------------------
-
-### ✔️ 4. Decorator --- Sistema de vehículos
-
-Clases:
-
--   `Desplazamiento`\
--   `DesplazamientoDecorator`\
--   `Carro`, `Moto`, `Bicicleta`
-
-**Razón:** Extender dinámicamente el comportamiento del movimiento sin
-alterar el personaje base.
-
-------------------------------------------------------------------------
-
-### ✔️ 5. Abstract Factory / Factory Method --- Fabricación de vehículos
-
-Clases:
-
--   `VehiculoFactory`\
--   `CarroFactory`\
--   `MotoFactory`\
--   `BicicletaFactory`
-
-**Razón:** Centralizar cómo se crean los vehículos y sus parámetros.
-
-------------------------------------------------------------------------
-
-### ✔️ 6. Facade --- `ImageFacade`
-
-Abstrae la carga de imágenes.
-
-**Razón:** Evita duplicar código y simplifica manejo de errores.
-
-------------------------------------------------------------------------
-
-## ❌ Patrones GoF NO implementados y por qué
-
-El proyecto no requiere los 23 patrones GoF.\
-Los restantes no se implementaron por estas razones:
-
-### 🟥 Patrones Creacionales no usados
-
--   **Prototype:** No se necesita clonación masiva.\
--   **Builder:** No hay objetos con construcción compleja.
-
-### 🟥 Patrones Estructurales no usados
-
--   **Adapter:** No se integran librerías incompatibles.\
--   **Bridge:** No se requiere desacoplar plataformas.\
--   **Composite:** No existen estructuras jerárquicas.\
--   **Flyweight:** No hay alto volumen de objetos repetidos.\
--   **Proxy:** No se manipulan recursos remotos/pesados.
-
-### 🟥 Patrones Comportamentales no usados
-
--   **Chain of Responsibility:** No hay cadenas de responsabilidad.\
--   **State:** Los estados del juego son simples.\
--   **Mediator:** La comunicación actual ya es simple con GameManager.\
--   **Memento:** No hay guardado/restauración del estado.\
--   **Interpreter / Visitor:** No se procesan lenguajes ni jerarquías
-    complejas.\
--   **Command:** Las acciones son simples y directas.
-
-------------------------------------------------------------------------
-
-## 👥 Integrantes del Proyecto
-
--   **Kaleth Molina Diaz - 20232020096**\
--   **Nelson David Molina Ramos - 20222020121**
-
+🏗️ Arquitectura y Patrones
+✅ Patrones Implementados
+🎯 Singleton - GameManager
+Propósito: Control centralizado del estado del juego
