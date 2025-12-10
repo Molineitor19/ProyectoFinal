@@ -233,7 +233,10 @@ src/
 │   └── ObservadorPuntuacion.java
 └── Imagenes/imagenes/
 ```
+---
+### Integrantes del Proyecto
 
-
+-   **Kaleth Molina Diaz - 20232020096**
+-   **Nelson David Molina Ramos - 20222020121**
 
 
