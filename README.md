@@ -145,3 +145,33 @@ Image imagen = ImageFacade.cargar("/ruta/imagen.png");
 | Command   | No se requieren acciones encapsuladas         |
 | Memento   | No hay sistema de guardado                    |
 | Visitor   | No se recorren estructuras complejas          |
+
+### Mecanicas del Juego
+### Controles
+| Tecla / Acción | Función                          |
+|----------------|----------------------------------|
+| Flechas        | Movimiento (modo teclado)        |
+| Mouse          | Movimiento vertical (modo mouse) |
+| M              | Cambiar modo de control          |
+| ESC            | Salir de pantalla completa       |
+
+### Sistema de Puntuacion
+
++---------------+---------------+-------------------+
+|   Acción      |   Puntos      |   Descripción     |
++---------------+---------------+-------------------+
+|  Esquivar     |   +10         | Por obstáculo     |
+|  Sobrevivir   |  Tiempo x 1   | Cada segundo vivo |
+|  Colisión     |   Game Over   | Fin del juego     |
++---------------+---------------+-------------------+
+
+### Flujo del juego
+
+Menú Principal → Selector de Vehículo → Juego en Progreso
+        ↑               ↓                    ↓
+        └─────── Game Over ←───── ¿Colisión? ←─┘
+                        ↓
+             Reiniciar / Menú / Salir
+
+
+
